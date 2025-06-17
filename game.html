@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      @font-face {
+        font-family: B04;
+        src: url("assets/04B.ttf");
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #333;
+        background-image: url("asset/bg polos.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        font-family: B04;
+        overflow: hidden;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        scale: 1.5;
+      }
+
+      .game {
+        width: 640px;
+        height: 480px;
+        color: #fff;
+        position: relative;
+        padding-bottom: 100px;
+      }
+
+      h4 {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 18px;
+        color: #ffffff;
+        text-shadow: 1px 1px 2px #000;
+      }
+
+      h3 {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 24px;
+      }
+
+      .trash {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 28%;
+      }
+
+      .trash img {
+        padding: 5px;
+        border: 1px solid #6c0056;
+      }
+
+      .trashBins {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 12px 0;
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        z-index: 999;
+      }
+
+      .trashBins img {
+        width: 120px;
+        height: auto;
+        transition: transform 0.2s;
+      }
+
+      .gameOver {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 30px;
+        border-radius: 20px;
+        width: 60%;
+        max-width: 400px;
+        text-align: center;
+        color: #fff;
+        box-shadow: 0 0 15px #000;
+      }
+
+      .gameOver h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+      }
+
+      .gameOver p {
+        font-size: 20px;
+        margin-top: 10px;
+        cursor: pointer;
+        padding: 10px;
+        background-color: #6c0056;
+        border-radius: 10px;
+        display: inline-block;
+      }
+
+      #toggle-music {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        padding: 10px 15px;
+        background-color: #ffffff88;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="game">
+        <div>
+          <h4>Score: 20</h4>
+          <h3>Level 5</h3>
+        </div>
+
+        <div class="trash">
+          <img src="assets/trash/plastic/3.png" />
+        </div>
+
+        <div class="gameOver">
+          <h1>Game Over!</h1>
+          <p id="replayBtn">Main Lagi</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="trashBins">
+      <img name="organic" src="assets/bak hijau.png" />
+      <img name="plastic" src="assets/bak kuning.png" />
+      <img name="glass" src="assets/bak merah.png" />
+    </div>
+
+    <button id="toggle-music">🔊</button>
+
+    <script src="main.js"></script>
+    <script src="audio-controller.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const toggleButton = document.getElementById("toggle-music");
+
+        if (window.audio) {
+          updateIcon();
+
+          toggleButton.addEventListener("click", () => {
+            if (window.audio.paused) {
+              window.audio.play();
+            } else {
+              window.audio.pause();
+            }
+            updateIcon();
+          });
+
+          function updateIcon() {
+            toggleButton.textContent = window.audio.paused ? "🔇" : "🔊";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

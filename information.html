@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-image: url("asset/bg-tentanggame.png");
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+
+    .button {
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      transition: transform 0.3s, opacity 0.4s ease-in-out;
+      transform: scale(0.5);
+      position: relative;
+      top: 250px;
+      opacity: 0;
+      margin: 0 10px;
+    }
+
+    .button:hover {
+      transform: scale(0.6);
+    }
+
+    .button img {
+      width: 150px;
+      height: auto;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 30px;
+    }
+
+    .show {
+      opacity: 1;
+    }
+
+    .hidden {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="background hidden" id="bg"></div>
+
+  <div class="button-container">
+    <a href="menu.html" class="button hidden" id="btnMenu">
+      <img src="asset/home.png" alt="Home" />
+    </a>
+    <a href="tentang.html" class="button hidden" id="btnNext">
+      <img src="asset/next.png" alt="Next" />
+    </a>
+  </div>
+
+  <button id="toggle-music" style="
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 10px 15px;
+  background-color: #ffffff88;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+">
+  🔊
+</button>
+
+
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const bg = document.getElementById("bg");
+      const btnMenu = document.getElementById("btnMenu");
+      const btnNext = document.getElementById("btnNext");
+
+      void bg.offsetWidth;
+
+      setTimeout(() => {
+        bg.classList.add("show");
+        btnMenu.classList.add("show");
+        btnNext.classList.add("show");
+
+        bg.classList.remove("hidden");
+        btnMenu.classList.remove("hidden");
+        btnNext.classList.remove("hidden");
+      }, 50);
+    });
+
+    function addTransitionEffect(btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        const href = this.getAttribute("href");
+
+        const bg = document.getElementById("bg");
+        const btnMenu = document.getElementById("btnMenu");
+        const btnNext = document.getElementById("btnNext");
+
+        bg.classList.remove("show");
+        btnMenu.classList.remove("show");
+        btnNext.classList.remove("show");
+
+        bg.classList.add("hidden");
+        btnMenu.classList.add("hidden");
+        btnNext.classList.add("hidden");
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 400);
+      });
+    }
+
+    addTransitionEffect(document.getElementById("btnMenu"));
+    addTransitionEffect(document.getElementById("btnNext"));
+  </script>
+  <script src="audio-controller.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleButton = document.getElementById("toggle-music");
+
+    if (window.audio) {
+      updateIcon();
+
+      toggleButton.addEventListener("click", () => {
+        if (window.audio.paused) {
+          window.audio.play();
+        } else {
+          window.audio.pause();
+        }
+        updateIcon();
+      });
+
+      function updateIcon() {
+        if (window.audio.paused) {
+          toggleButton.textContent = "🔇";
+        } else {
+          toggleButton.textContent = "🔊";
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>
