@@ -1,0 +1,94 @@
+@font-face {
+  font-family: B04;
+  src: url("assets/04B.ttf");
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-image: url("asset/BG-MATERI.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: B04, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+/* Game Container */
+.game {
+  width: 100%;
+  max-width: 1024px;
+  margin: auto;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  color: #6c0056;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5%;
+}
+
+h4,
+h3 {
+  margin: 0;
+}
+
+/* Trash (Sampah) */
+.trash {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+.trash img {
+  padding: 10px;
+  border: 2px solid #6c0056;
+  border-radius: 8px;
+  background-color: white;
+}
+
+/* Tempat Sampah */
+.trashBins {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 60px;
+}
+.trashBins img {
+  width: 80px;
+  height: auto;
+  transition: transform 0.2s;
+}
+.trashBins img:hover {
+  transform: scale(1.1);
+}
+
+/* Game Over Box */
+.gameOver {
+  display: none; /* disembunyikan dulu */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(51, 51, 51, 0.95);
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  z-index: 1000;
+}
+.gameOver h1 {
+  color: white;
+  margin-bottom: 20px;
+}
+.gameOver p {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: underline;
+}
