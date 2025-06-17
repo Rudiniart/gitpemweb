@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Akun</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('asset/BG-MATERI.png') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+      width: 320px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h2 {
+      margin-bottom: 24px;
+      color: #333;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 0.85em;
+      margin: 0 0 10px;
+      text-align: left;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required />
+      <p id="emailError" class="error-message"></p>
+
+      <input type="password" id="password" placeholder="Password" required />
+      <p id="passwordError" class="error-message"></p>
+
+      <button type="submit">Login</button>
+    </form>
+    <p>Belum punya akun? <a href="signup.html">Daftar di sini</a></p>
+  </div>
+
+  <button id="toggle-music" style="
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 10px 15px;
+  background-color: #ffffff88;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;">
+  🔊
+  </button>
+
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAoG1mAHzaRBQAgbl9HCVPzyG-4mHLvl5U",
+      authDomain: "login-sign-project-f4255.firebaseapp.com",
+      projectId: "login-sign-project-f4255",
+      storageBucket: "login-sign-project-f4255.appspot.com",
+      messagingSenderId: "17188415904",
+      appId: "1:17188415904:web:bed920d4de6eac7b4bdcc5",
+      measurementId: "G-108SJ7L7SZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Reset pesan error
+      document.getElementById("emailError").textContent = "";
+      document.getElementById("passwordError").textContent = "";
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          alert("Login berhasil!");
+          window.location.href = "menu.html"; // Ganti dengan halaman tujuan
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+
+          if (errorCode === "auth/invalid-email") {
+            document.getElementById("emailError").textContent = "Format email tidak valid.";
+          } else if (errorCode === "auth/user-not-found") {
+            document.getElementById("emailError").textContent = "Email tidak ditemukan.";
+          } else if (errorCode === "auth/wrong-password") {
+            document.getElementById("passwordError").textContent = "Kata sandi salah.";
+          } else if (errorCode === "auth/invalid-credential") {
+            document.getElementById("passwordError").textContent = "Email atau kata sandi salah, mohon diisi kembali.";
+          } else {
+            document.getElementById("passwordError").textContent = "Terjadi kesalahan: " + error.message;
+          }
+        });
+    });
+  </script>
+  <script src="audio-controller.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleButton = document.getElementById("toggle-music");
+
+    if (window.audio) {
+      updateIcon();
+
+      toggleButton.addEventListener("click", () => {
+        if (window.audio.paused) {
+          window.audio.play();
+        } else {
+          window.audio.pause();
+        }
+        updateIcon();
+      });
+
+      function updateIcon() {
+        if (window.audio.paused) {
+          toggleButton.textContent = "🔇";
+        } else {
+          toggleButton.textContent = "🔊";
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>
