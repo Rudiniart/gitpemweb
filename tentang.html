@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tentang Kami</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: url("asset/bg\ polos2.jpg") no-repeat center center fixed;
+        background-size: cover;
+      }
+
+      .portfolio {
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .portfolio h2 {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      .portfolio-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .portfolio-card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 250px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .portfolio-card:hover {
+        transform: scale(1.05);
+      }
+
+      .profile-img {
+        width: 150px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .kembali {
+        margin-top: 40px;
+      }
+
+      .kembali img {
+        width: 50px;
+        height: auto;
+        cursor: pointer;
+      }
+
+      #toggle-music {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        padding: 10px 15px;
+        background-color: #ffffff88;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="portfolio">
+      <h2><span>Tentang </span>kami</h2>
+      <p>Berikut adalah informasi singkat dari tim kami:</p>
+
+      <div class="portfolio-container">
+        <div class="portfolio-card">
+          <img
+            src="pas foto/rayya.jpg"
+            alt="Almeyda Araya"
+            class="profile-img"
+          />
+          <h3>Almeyda Araya</h3>
+          <p><strong>NIM:</strong> 2410131210011</p>
+          <p><strong>Prodi:</strong> Pend. Ilmu Komputer</p>
+          <p><strong>Fakultas:</strong> FKIP</p>
+          <p><strong>Universitas:</strong> Universitas Lambung Mangkurat</p>
+        </div>
+
+        <div class="portfolio-card">
+          <img
+            src="pas foto/alif.jpg"
+            alt="Muhammad Alif"
+            class="profile-img"
+          />
+          <h3>Muhammad Alif</h3>
+          <p><strong>NIM:</strong> 2410131210006</p>
+          <p><strong>Prodi:</strong> Pend. Ilmu Komputer</p>
+          <p><strong>Fakultas:</strong> FKIP</p>
+          <p><strong>Universitas:</strong> Universitas Lambung Mangkurat</p>
+        </div>
+
+        <div class="portfolio-card">
+          <img src="pas foto/rudini.jpg" alt="Rudini" class="profile-img" />
+          <h3>Rudini</h3>
+          <p><strong>NIM:</strong> 2410131210021</p>
+          <p><strong>Prodi:</strong> Pend. Ilmu Komputer</p>
+          <p><strong>Fakultas:</strong> FKIP</p>
+          <p><strong>Universitas:</strong> Universitas Lambung Mangkurat</p>
+        </div>
+      </div>
+
+      <div class="kembali">
+        <a href="information.html">
+          <img src="asset/BACK.png" alt="Back" />
+        </a>
+      </div>
+    </section>
+
+    <button id="toggle-music">🔊</button>
+
+    <script src="audio-controller.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const toggleButton = document.getElementById("toggle-music");
+
+        if (window.audio) {
+          updateIcon();
+
+          toggleButton.addEventListener("click", () => {
+            if (window.audio.paused) {
+              window.audio.play();
+            } else {
+              window.audio.pause();
+            }
+            updateIcon();
+          });
+
+          function updateIcon() {
+            toggleButton.textContent = window.audio.paused ? "🔇" : "🔊";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
