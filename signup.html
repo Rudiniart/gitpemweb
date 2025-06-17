@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daftar Akun</title>
+  <style>
+    body {
+      background: url('asset/BG-MATERI.png') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      width: 300px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    p {
+      margin-top: 16px;
+      font-size: 0.95em;
+    }
+
+    a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Daftar Akun</h2>
+    <form id="signupForm">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password (min 6 karakter)" required />
+      <input type="password" id="confirmPassword" placeholder="Konfirmasi Password" required />
+      <button type="submit">Daftar</button>
+    </form>
+    <p>Sudah punya akun? <a href="login2.html">Login di sini</a></p>
+  </div>
+
+  <button id="toggle-music" style="
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 10px 15px;
+  background-color: #ffffff88;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;">
+  🔊
+  </button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAoG1mAHzaRBQAgbl9HCVPzyG-4mHLvl5U",
+      authDomain: "login-sign-project-f4255.firebaseapp.com",
+      projectId: "login-sign-project-f4255",
+      storageBucket: "login-sign-project-f4255.appspot.com",
+      messagingSenderId: "17188415904",
+      appId: "1:17188415904:web:bed920d4de6eac7b4bdcc5",
+      measurementId: "G-108SJ7L7SZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (!email.includes('@')) {
+        alert("Email tidak valid!");
+        return;
+      }
+
+      if (password.length < 6) {
+        alert("Password minimal 6 karakter!");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Konfirmasi password tidak cocok!");
+        return;
+      }
+
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert("Pendaftaran berhasil! Silakan login.");
+        window.location.href = "login2.html";
+      } catch (error) {
+        console.error(error);
+        alert("Gagal daftar: " + error.message);
+      }
+    });
+  </script>
+  <script src="audio-controller.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleButton = document.getElementById("toggle-music");
+
+    if (window.audio) {
+      updateIcon();
+
+      toggleButton.addEventListener("click", () => {
+        if (window.audio.paused) {
+          window.audio.play();
+        } else {
+          window.audio.pause();
+        }
+        updateIcon();
+      });
+
+      function updateIcon() {
+        if (window.audio.paused) {
+          toggleButton.textContent = "🔇";
+        } else {
+          toggleButton.textContent = "🔊";
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>
